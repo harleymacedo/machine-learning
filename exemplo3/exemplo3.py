@@ -22,3 +22,7 @@ def load_housing_data(housing_path=HOUSING_PATH):
 
 housing = load_housing_data()
 housing.head() 
+
+housing['rooms_per_household'] = housing['total_rooms'] / housing['households']
+housing['bedrooms_per_rooms'] = housing['total_bedrooms'] / housing['total_rooms']
+housing['population_per_household'] = housing['population'] / housing['households'] 
