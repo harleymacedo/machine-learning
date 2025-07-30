@@ -26,3 +26,15 @@ housing.head()
 housing['rooms_per_household'] = housing['total_rooms'] / housing['households']
 housing['bedrooms_per_rooms'] = housing['total_bedrooms'] / housing['total_rooms']
 housing['population_per_household'] = housing['population'] / housing['households'] 
+
+housing = strat_train_set.drop('median_house_value', axis=1)
+housing_labels = strat_train_set['median_house_value'].copy()
+
+housing.dropna(subset=['total_bedrooms'])
+
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(strategy='median')
+
+housing_num = housing.drop('ocean_proximity', axis=1)
+imputer.fit(housing_num)
+x = imputer.transform(housing_num)
