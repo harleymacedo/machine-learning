@@ -38,3 +38,6 @@ imputer = SimpleImputer(strategy='median')
 housing_num = housing.drop('ocean_proximity', axis=1)
 imputer.fit(housing_num)
 x = imputer.transform(housing_num)
+
+housing_cat = housing[['ocean_proximity']]
+housing_cat.head(10)
