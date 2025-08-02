@@ -41,3 +41,8 @@ x = imputer.transform(housing_num)
 
 housing_cat = housing[['ocean_proximity']]
 housing_cat.head(10)
+
+from sklearn.preprocessing import OrdinalEncoder
+ordinal_encoder = OrdinalEncoder()
+house_cat_encoded = ordinal_encoder.fit_transform(housing_cat)
+housing_cat_encoded[:10]
