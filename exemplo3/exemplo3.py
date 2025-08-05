@@ -51,7 +51,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 rooms_ix, bedrooms_ix, population_ix, households_ix = 3, 4, 5, 6
 
 class CombinedAttributesAdder(BaseEstimator, TransformerMixin): 
-    def_ _init_ _(self, add_bedrooms_per_rooms = True):
+    def_ __init__(self, add_bedrooms_per_rooms = True):
         self.add_bedrooms_per_room = add_bedrooms_per_room
     def fit(self, X, y=None):
         return self
@@ -65,3 +65,13 @@ class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
             return np.c_[X, rooms_per_household, population_per_household]
     attr_adder = CombinedAttributesAdder(add_bedrooms_per_room=False)
     housing_extra_attribs = attr_adder.transform(housing.values) 
+
+    from sklearn.pipeline import Pipeline
+    from sklearn.preprocessing import StandardScaler 
+
+    num_pipeline = Pipeline([
+        ('imputer', SimpleImputer(stratgy='median')),
+        ('attribs_adder', CombinedAttributesAdder()),
+        ('std_scaler', StandardScaler()),
+    ])
+    housing_num_tr = num_pipeline.fit_transform(housing_num)
