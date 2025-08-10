@@ -64,7 +64,7 @@ class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
         else:
             return np.c_[X, rooms_per_household, population_per_household]
     attr_adder = CombinedAttributesAdder(add_bedrooms_per_room=False)
-    housing_extra_attribs = attr_adder.transform(housing.values) 
+    housing_extra_attribs = attr_adder.transform(housing.values)
 
     from sklearn.pipeline import Pipeline
     from sklearn.preprocessing import StandardScaler 
@@ -75,3 +75,7 @@ class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
         ('std_scaler', StandardScaler()),
     ])
     housing_num_tr = num_pipeline.fit_transform(housing_num)
+
+    from sklearn.tree import DecisionTreeRegressor
+    tree_reg = DecisionTreeRegressor()
+    tree_reg.fit = (housing_prepared, housing_labels)
