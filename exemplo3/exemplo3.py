@@ -90,3 +90,15 @@ class CombinedAttributesAdder(BaseEstimator, TransformerMixin):
                                scoring='neg_mean_squared_error',
                                return_train_score=True)
     grid_search.fit(housing_prepared, housing_labels)
+
+    final_model = grid_search.best_estimator_
+
+    x_test = strat_test_set.drop('median_house_value', axis=1)
+    y_test = strat_test_set['median_house_value'].copy()
+
+    x_test_prepared = full_pipeline.transform(x_test)
+    final_predictions = final_model.predict(x_test_prepared)
+
+    final_mse = mean_squared_error(y_test, final_predictions)
+    final_rmse = np.sqrt(final_mse)
+    
